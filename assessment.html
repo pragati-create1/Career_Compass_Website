@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Assessment | Career Compass</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+:root {
+    --bg: #f5efe3;
+    --card: #ffffff;
+    --text: #244d3c;
+    --green: #285b45;
+    --mint: #d5eadf;
+    --muted: #65766b;
+    --border: #b7cbbd;
+}
+
+body.dark {
+    --bg: #172a22;
+    --card: #263d32;
+    --text: #edf5ee;
+    --green: #9bcbb0;
+    --mint: #395b49;
+    --muted: #c0cec3;
+    --border: #567363;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 7%;
+    background: var(--card);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #70a987;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #70a987;
+}
+
+.theme-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+    background: var(--mint);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+/* MAIN CONTAINER */
+
+.main-container {
+    max-width: 850px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+.assessment-box {
+    background: var(--card);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+/* PROGRESS BAR */
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+    background: var(--mint);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: #4b926d;
+    transition: 0.3s;
+}
+
+/* QUESTIONS */
+
+.question-number {
+    color: #70a987;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.question-title {
+    font-size: 23px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.option {
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.option:hover {
+    background: var(--mint);
+}
+
+.option.selected {
+    background: var(--mint);
+    border: 2px solid #4b926d;
+}
+
+.option input {
+    accent-color: #285b45;
+    width: 17px;
+    height: 17px;
+}
+
+.option span {
+    font-size: 15px;
+}
+
+/* BUTTONS */
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    gap: 15px;
+}
+
+.action-btn {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 8px;
+    background: var(--green);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.action-btn:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.error {
+    color: #d9534f;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* RESULT SECTION */
+
+#resultSection {
+    display: none;
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+#resultSection h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.result-description {
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.result-card {
+    background: var(--mint);
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.result-card h3 {
+    margin-bottom: 10px;
+}
+
+.result-card p {
+    line-height: 1.6;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.score {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 7px 13px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+footer {
+    background: var(--mint);
+    padding: 25px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 600px) {
+
+    header {
+        flex-direction: column;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .assessment-box {
+        padding: 22px;
+    }
+
+    .question-title {
+        font-size: 19px;
+    }
+
+    .option {
+        padding: 14px;
+    }
+
+    .button-group {
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        padding: 12px 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        Career <span>Compass</span> 🧭
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="career.html">Explore Careers</a>
+        <a href="login.html">Login</a>
+
+        <button class="theme-btn" onclick="toggleTheme()">
+            🌙 / ☀️
+        </button>
+    </nav>
+
+</header>
+
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+    <h1>Discover Your Career Path </h1>
+
+    <p>
+        Answer a few simple questions about your interests,
+        strengths and preferences. Let's discover career
+        opportunities that match your interests!
+    </p>
+
+</section>
+
+<!-- ASSESSMENT -->
+
+<div class="main-container">
+
+    <div class="assessment-box">
+
+        <!-- QUESTION SECTION -->
+
+        <div id="quizSection">
+
+            <div class="progress-info">
+
+                <span id="questionCount">Question 1 of 8</span>
+
+                <span id="progressPercent">0% Completed</span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div class="progress" id="progressBar"></div>
+
+            </div>
+
+            <div id="questionArea"></div>
+
+            <p class="error" id="errorMessage"></p>
+
+            <div class="button-group">
+
+                <button class="action-btn"
+                    id="prevBtn" onclick="previousQuestion()" disabled>
+                    ← Previous
+                </button>
+
+                <button class="action-btn"
+                    id="nextBtn" onclick="nextQuestion()">
+                    Next →
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- RESULT SECTION -->
+
+        <div id="resultSection">
+
+            <div class="result-icon">🎯</div>
+
+            <h2>Your Career Assessment Results!</h2>
+
+            <p class="result-description">
+                Based on your answers, here are some career
+                areas that may match your interests and preferences.
+            </p>
+
+            <div id="resultCards"></div>
+
+            <div class="result-actions">
+
+                <button class="action-btn" onclick="restartQuiz()">
+                    Retake Assessment
+                </button>
+
+                <button class="action-btn"
+                    onclick="location.href='career.html'">
+                    Explore Careers
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+    <p>© 2026 Career Compass | All Rights Reserved</p>
+    <p>Find Your Direction. Shape Your Future.</p>
+</footer>
+
+<script>
+
+// QUESTION DATA
+
+const questions = [
+
+{
+    question: "1. Which activity interests you the most?",
+    options: [
+        {text: "Solving programming and technical problems", category: "Technology"},
+        {text: "Creating designs and artwork", category: "Design"},
+        {text: "Managing projects and planning business ideas", category: "Business"},
+        {text: "Conducting experiments and research", category: "Science"},
+        {text: "Helping people and caring for others", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "2. What type of work environment do you prefer?",
+    options: [
+        {text: "Technology labs and software companies", category: "Technology"},
+        {text: "Creative studios and design spaces", category: "Design"},
+        {text: "Corporate offices and business environments", category: "Business"},
+        {text: "Research laboratories", category: "Science"},
+        {text: "Hospitals and healthcare centres", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "3. Which skill would you most like to improve?",
+    options: [
+        {text: "Programming and logical thinking", category: "Technology"},
+        {text: "Creativity and visual communication", category: "Design"},
+        {text: "Leadership and communication", category: "Business"},
+        {text: "Scientific investigation and analysis", category: "Science"},
+        {text: "Patient care and medical knowledge", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "4. What kind of problems do you enjoy solving?",
+    options: [
+        {text: "Computer and software-related problems", category: "Technology"},
+        {text: "Visual and design challenges", category: "Design"},
+        {text: "Business and financial challenges", category: "Business"},
+        {text: "Scientific and environmental problems", category: "Science"},
+        {text: "Health and patient-related problems", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "5. Which subject do you enjoy learning?",
+    options: [
+        {text: "Computer Science and Mathematics", category: "Technology"},
+        {text: "Art and Design", category: "Design"},
+        {text: "Economics and Management", category: "Business"},
+        {text: "Physics, Chemistry and Biology", category: "Science"},
+        {text: "Biology and Health Sciences", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "6. Which project would you prefer to work on?",
+    options: [
+        {text: "Developing a mobile application", category: "Technology"},
+        {text: "Designing a website interface", category: "Design"},
+        {text: "Creating a business startup plan", category: "Business"},
+        {text: "Researching climate change", category: "Science"},
+        {text: "Developing a healthcare awareness program", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "7. What is your biggest strength?",
+    options: [
+        {text: "Logical thinking and problem solving", category: "Technology"},
+        {text: "Imagination and creativity", category: "Design"},
+        {text: "Leadership and decision making", category: "Business"},
+        {text: "Observation and curiosity", category: "Science"},
+        {text: "Empathy and helping others", category: "Healthcare"}
+    ]
+},
+
+{
+    question: "8. What would make you happiest in your future career?",
+    options: [
+        {text: "Building innovative technologies", category: "Technology"},
+        {text: "Creating beautiful and useful designs", category: "Design"},
+        {text: "Leading teams and achieving business goals", category: "Business"},
+        {text: "Discovering new knowledge and solutions", category: "Science"},
+        {text: "Improving people's health and well-being", category: "Healthcare"}
+    ]
+}
+
+];
+
+// CAREER INFORMATION
+
+const careerInfo = {
+
+    Technology: {
+        icon: "💻",
+        description: "You may enjoy technology, programming, digital innovation and solving technical challenges.",
+        careers: ["Software Developer", "Data Scientist", "Cybersecurity Analyst"]
+    },
+
+    Design: {
+        icon: "🎨",
+        description: "Your interests may match creative thinking, visual communication and digital design.",
+        careers: ["UI/UX Designer", "Web Designer", "Graphic Designer"]
+    },
+
+    Business: {
+        icon: "📈",
+        description: "You may enjoy planning, management, leadership and business decision-making.",
+        careers: ["Business Analyst", "Digital Marketer", "Financial Analyst"]
+    },
+
+    Science: {
+        icon: "🔬",
+        description: "You may be interested in research, experimentation and scientific discoveries.",
+        careers: ["Research Scientist", "Environmental Scientist", "Data Researcher"]
+    },
+
+    Healthcare: {
+        icon: "🩺",
+        description: "Your interests may match helping people, healthcare services and medical knowledge.",
+        careers: ["Doctor", "Nurse", "Healthcare Researcher"]
+    }
+
+};
+
+// VARIABLES
+
+let currentQuestion = 0;
+
+let answers = new Array(questions.length).fill(null);
+
+// DISPLAY QUESTION
+
+function displayQuestion() {
+
+    const question = questions[currentQuestion];
+
+    document.getElementById("questionCount").textContent =
+        "Question " + (currentQuestion + 1) +
+        " of " + questions.length;
+
+    const progress =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    document.getElementById("progressBar").style.width =
+        progress + "%";
+
+    document.getElementById("progressPercent").textContent =
+        Math.round(progress) + "% Completed";
+
+    let html = `
+        <div class="question-number">
+            QUESTION ${currentQuestion + 1}
+        </div>
+
+        <h2 class="question-title">
+            ${question.question}
+        </h2>
+
+        <div class="options">
+    `;
+
+    question.options.forEach((option, index) => {
+
+        const selected = answers[currentQuestion] === index;
+
+        html += `
+            <label class="option ${selected ? "selected" : ""}">
+
+                <input type="radio"
+                    name="answer"
+                    value="${index}"
+                    ${selected ? "checked" : ""}
+                    onchange="selectAnswer(${index})">
+
+                <span>${option.text}</span>
+
+            </label>
+        `;
+
+    });
+
+    html += "</div>";
+
+    document.getElementById("questionArea").innerHTML = html;
+
+    document.getElementById("prevBtn").disabled =
+        currentQuestion === 0;
+
+    document.getElementById("nextBtn").textContent =
+        currentQuestion === questions.length - 1
+        ? "View Results →"
+        : "Next →";
+
+    document.getElementById("errorMessage").textContent = "";
+
+}
+
+// SELECT ANSWER
+
+function selectAnswer(index) {
+
+    answers[currentQuestion] = index;
+
+    displayQuestion();
+
+}
+
+// NEXT QUESTION
+
+function nextQuestion() {
+
+    if (answers[currentQuestion] === null) {
+
+        document.getElementById("errorMessage").textContent =
+            "Please select an answer before continuing.";
+
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+
+        currentQuestion++;
+
+        displayQuestion();
+
+    } else {
+
+        calculateResults();
+
+    }
+
+}
+
+// PREVIOUS QUESTION
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        displayQuestion();
+
+    }
+
+}
+
+// CALCULATE RESULTS
+
+function calculateResults() {
+
+    const scores = {
+
+        Technology: 0,
+        Design: 0,
+        Business: 0,
+        Science: 0,
+        Healthcare: 0
+
+    };
+
+    answers.forEach((answer, index) => {
+
+        const selectedOption =
+            questions[index].options[answer];
+
+        scores[selectedOption.category]++;
+
+    });
+
+    const sortedResults = Object.entries(scores)
+        .sort((a, b) => b[1] - a[1]);
+
+    showResults(sortedResults);
+
+}
+
+// DISPLAY RESULTS
+
+function showResults(results) {
+
+    document.getElementById("quizSection").style.display = "none";
+
+    document.getElementById("resultSection").style.display = "block";
+
+    const resultCards = document.getElementById("resultCards");
+
+    resultCards.innerHTML = "";
+
+    const topScore = results[0][1];
+
+    // Show all categories that tie for the highest score.
+    // If only one category leads, show the next-best category too.
+
+    let recommendations = results.filter(
+        result => result[1] === topScore
+    );
+
+    if (recommendations.length === 1 && results.length > 1) {
+        recommendations.push(results[1]);
+    }
+
+    recommendations.forEach(result => {
+
+        const category = result[0];
+
+        const score = result[1];
+
+        const info = careerInfo[category];
+
+        const percentage = Math.round(
+            (score / questions.length) * 100
+        );
+
+        resultCards.innerHTML += `
+
+            <div class="result-card">
+
+                <h3>${info.icon} ${category}</h3>
+
+                <span class="score">
+                    Interest Score: ${score}/${questions.length}
+                </span>
+
+                <p>${info.description}</p>
+
+                <h3 style="margin-top:15px;">
+                    Suggested Careers
+                </h3>
+
+                <p>${info.careers.join(" • ")}</p>
+
+                <p style="margin-top:10px;">
+                    Your score: ${percentage}% of your answers
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+// RESTART ASSESSMENT
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+
+    answers = new Array(questions.length).fill(null);
+
+    document.getElementById("quizSection").style.display = "block";
+
+    document.getElementById("resultSection").style.display = "none";
+
+    displayQuestion();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+// DARK AND LIGHT MODE
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+}
+
+// START QUIZ
+
+displayQuestion();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Career Compass</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --bg: #f5efe3;
+            --card: #ffffff;
+            --text: #244d3c;
+            --mint: #d5eadf;
+            --green: #285b45;
+            --input: #f3f7f3;
+        }
+
+        body.dark {
+            --bg: #172a22;
+            --card: #263d32;
+            --text: #edf5ee;
+            --mint: #395b49;
+            --green: #9bcbb0;
+            --input: #344b3e;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: 0.3s;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 7%;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #6eaa87;
+        }
+
+        .theme-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 20px;
+            background: var(--green);
+            color: white;
+            cursor: pointer;
+        }
+
+        .container {
+            min-height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .auth-box {
+            width: 900px;
+            min-height: 540px;
+            background: var(--card);
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .welcome {
+            width: 45%;
+            background: var(--mint);
+            padding: 55px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome h1 {
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .welcome p {
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .form-area {
+            width: 55%;
+            padding: 45px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .tabs button {
+            background: none;
+            border: none;
+            font-size: 19px;
+            font-weight: bold;
+            color: var(--text);
+            cursor: pointer;
+            padding-bottom: 8px;
+        }
+
+        .tabs button.active {
+            border-bottom: 3px solid #6eaa87;
+        }
+
+        .form-area h2 {
+            margin-bottom: 10px;
+        }
+
+        .form-area .subtitle {
+            margin-bottom: 25px;
+            color: gray;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #b7cbbd;
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #4b926d;
+        }
+
+        .password-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-box input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .show-btn {
+            border: none;
+            background: var(--mint);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: #285b45;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #397858;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media(max-width: 700px) {
+            .auth-box {
+                flex-direction: column;
+            }
+
+            .welcome, .form-area {
+                width: 100%;
+            }
+
+            .welcome {
+                padding: 30px;
+            }
+
+            .welcome h1 {
+                font-size: 27px;
+            }
+
+            .form-area {
+                padding: 30px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="calculator.html" class="cgpa-float">🧮 CGPA Calculator</a>
+
+    <div class="logo">Career <span>Compass</span> 🧭</div>
+    <button class="theme-btn" onclick="toggleTheme()">
+        🌙 / ☀️ Theme
+    </button>
+</header>
+
+<div class="container">
+
+    <div class="auth-box">
+
+        <div class="welcome">
+            <h1>Welcome to Career Compass!</h1>
+
+            <p>
+                Your future begins with the right direction.
+                Explore your interests, discover career opportunities
+                and take the next step towards your dream career.
+            </p>
+
+            <br>
+
+            <h3>Find Your Direction. Shape Your Future.</h3>
+        </div>
+
+        <div class="form-area">
+
+            <div class="tabs">
+                <button id="loginTab" class="active"
+                    onclick="showLogin()">Login</button>
+
+                <button id="signupTab"
+                    onclick="showSignup()">Sign Up</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+
+            <form id="loginForm">
+
+                <h2>Welcome Back!</h2>
+
+                <p class="subtitle">
+                    Login to continue your career journey.
+                </p>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+
+                    <div class="password-box">
+                        <input type="password" id="loginPassword"
+                            placeholder="Enter password" required>
+
+                        <button type="button" class="show-btn"
+                            onclick="togglePassword('loginPassword', this)">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Login
+                </button>
+
+                <p class="message" id="loginMessage"></p>
+
+            </form>
+
+            <!-- SIGN UP FORM -->
+
+            <form id="signupForm" class="hidden">
+
+                <h2>Create Account</h2>
+
+                <p class="subtitle">
+                    Start exploring your career possibilities.
+                </p>
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName"
+                        placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signupEmail"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+
+                    <div class="password-box">
+                        <input type="password" id="signupPassword"
+                            placeholder="Create password"
+                            minlength="8" required>
+
+                        <button type="button" class="show-btn"
+                            onclick="togglePassword('signupPassword', this)">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Create Account
+                </button>
+
+                <p class="message" id="signupMessage"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Career Compass | All Rights Reserved
+</footer>
+
+<script>
+
+    function showLogin() {
+        document.getElementById("loginForm").classList.remove("hidden");
+        document.getElementById("signupForm").classList.add("hidden");
+
+        document.getElementById("loginTab").classList.add("active");
+        document.getElementById("signupTab").classList.remove("active");
+    }
+
+    function showSignup() {
+        document.getElementById("signupForm").classList.remove("hidden");
+        document.getElementById("loginForm").classList.add("hidden");
+
+        document.getElementById("signupTab").classList.add("active");
+        document.getElementById("loginTab").classList.remove("active");
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark");
+    }
+
+    function togglePassword(id, button) {
+        const password = document.getElementById(id);
+
+        if (password.type === "password") {
+            password.type = "text";
+            button.textContent = "Hide";
+        } else {
+            password.type = "password";
+            button.textContent = "Show";
+        }
+    }
+
+    document.getElementById("signupForm").addEventListener("submit",
+        function(event) {
+            event.preventDefault();
+
+            document.getElementById("signupMessage").textContent =
+                "Account form validated! Backend registration is not connected yet.";
+        }
+    );
+
+    document.getElementById("loginForm").addEventListener("submit",
+        function(event) {
+            event.preventDefault();
+
+            document.getElementById("loginMessage").textContent =
+                "Login form validated! Backend authentication is not connected yet.";
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,996 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Recommendations | Career Compass</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+:root {
+    --bg: #f5efe3;
+    --card: #ffffff;
+    --text: #244d3c;
+    --green: #285b45;
+    --mint: #d5eadf;
+    --muted: #65766b;
+    --border: #b7cbbd;
+}
+
+body.dark {
+    --bg: #172a22;
+    --card: #263d32;
+    --text: #edf5ee;
+    --green: #9bcbb0;
+    --mint: #395b49;
+    --muted: #c0cec3;
+    --border: #567363;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 7%;
+    background: var(--card);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #70a987;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #70a987;
+}
+
+.theme-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    background: var(--mint);
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 680px;
+    margin: auto;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+/* MAIN */
+
+.main-container {
+    padding: 45px 7%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 27px;
+}
+
+.section-description {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+/* CATEGORY SELECTOR */
+
+.filter-section {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-section input,
+.filter-section select {
+    padding: 13px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 8px;
+    width: 260px;
+    max-width: 100%;
+    outline: none;
+}
+
+.filter-section button {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 22px;
+    cursor: pointer;
+}
+
+/* CAREER GRID */
+
+.career-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.career-card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+    transition: 0.3s;
+    position: relative;
+}
+
+.career-card:hover {
+    transform: translateY(-5px);
+}
+
+.career-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.career-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.category {
+    display: inline-block;
+    background: var(--mint);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.career-card p {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14px;
+    min-height: 65px;
+}
+
+.skills-preview {
+    margin-top: 15px;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.details-btn,
+.save-btn {
+    padding: 11px 14px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.details-btn {
+    background: var(--green);
+    color: white;
+    flex: 1;
+}
+
+.save-btn {
+    background: var(--mint);
+    color: var(--text);
+}
+
+.save-btn.saved {
+    background: #d5e5c7;
+    color: #244d3c;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 35px;
+    color: var(--muted);
+    grid-column: 1 / -1;
+}
+
+/* DETAILS MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.modal-content {
+    background: var(--card);
+    color: var(--text);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.modal-content ul {
+    padding-left: 22px;
+    line-height: 1.9;
+}
+
+.close-btn {
+    float: right;
+    background: var(--mint);
+    border: none;
+    padding: 8px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+/* SAVED SECTION */
+
+.saved-section {
+    background: var(--mint);
+    padding: 40px 7%;
+    text-align: center;
+}
+
+.saved-section h2 {
+    margin-bottom: 12px;
+}
+
+.saved-section p {
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.saved-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.saved-item {
+    background: var(--card);
+    padding: 12px 18px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: var(--card);
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 950px) {
+    .career-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .career-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-section input,
+    .filter-section select,
+    .filter-section button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        Career <span>Compass</span> 🧭
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="career.html">Explore Careers</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="login.html">Login</a>
+
+        <button class="theme-btn" onclick="toggleTheme()">
+            🌙 / ☀️
+        </button>
+    </nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>Your Career Recommendations 🎯</h1>
+
+    <p>
+        Explore career opportunities that match your interests.
+        Discover the skills, qualifications and learning paths
+        needed to move towards your professional goals.
+    </p>
+
+</section>
+
+<!-- MAIN SECTION -->
+
+<main class="main-container">
+
+    <h2 class="section-title">
+        Find Your Career Match
+    </h2>
+
+    <p class="section-description">
+        Select your preferred field or search for a career.
+    </p>
+
+    <!-- FILTER -->
+
+    <div class="filter-section">
+
+        <input type="text" id="searchInput"
+        placeholder="Search career...">
+
+        <select id="categoryFilter">
+
+            <option value="All">All Career Fields</option>
+            <option value="Technology">Technology</option>
+            <option value="Design">Design</option>
+            <option value="Business">Business</option>
+            <option value="Science">Science</option>
+            <option value="Healthcare">Healthcare</option>
+
+        </select>
+
+        <button onclick="showAll()">Show All</button>
+
+        <button onclick="showSaved()">Saved Careers</button>
+
+    </div>
+
+    <!-- CAREER CARDS -->
+
+    <div class="career-grid" id="careerGrid"></div>
+
+</main>
+
+<!-- SAVED CAREERS -->
+
+<section class="saved-section">
+
+    <h2>⭐ Your Saved Careers</h2>
+
+    <p>
+        Keep track of the career opportunities you are interested in.
+    </p>
+
+    <div class="saved-list" id="savedList">
+        <p>No saved careers yet.</p>
+    </div>
+
+</section>
+
+<!-- CAREER DETAILS POPUP -->
+
+<div class="modal" id="careerModal">
+
+    <div class="modal-content">
+
+        <button class="close-btn" onclick="closeModal()">✕</button>
+
+        <div id="modalDetails"></div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+    <p>© 2026 Career Compass | All Rights Reserved</p>
+    <p>Find Your Direction. Shape Your Future.</p>
+</footer>
+
+<script>
+
+// CAREER DATA
+
+const careers = [
+
+{
+    name: "Software Developer",
+    category: "Technology",
+    icon: "💻",
+    description: "Develop software applications and digital solutions.",
+    skills: ["Python", "Java", "Problem Solving", "Programming"],
+    education: "B.Tech Computer Science, IT or related degree.",
+    roadmap: [
+        "Learn programming fundamentals.",
+        "Practise data structures and algorithms.",
+        "Build small software projects.",
+        "Learn software development tools.",
+        "Build a project portfolio."
+    ]
+},
+
+{
+    name: "Data Scientist",
+    category: "Technology",
+    icon: "📊",
+    description: "Analyse information and discover useful patterns from data.",
+    skills: ["Python", "Statistics", "SQL", "Data Analysis"],
+    education: "Computer Science, Mathematics or Data Science degree.",
+    roadmap: [
+        "Learn Python programming.",
+        "Study statistics and mathematics.",
+        "Learn SQL and data handling.",
+        "Practise data visualisation.",
+        "Build data analysis projects."
+    ]
+},
+
+{
+    name: "Cybersecurity Analyst",
+    category: "Technology",
+    icon: "🔐",
+    description: "Help protect digital systems, networks and information.",
+    skills: ["Networking", "Security Concepts", "Problem Solving"],
+    education: "Computer Science, IT or Cybersecurity degree.",
+    roadmap: [
+        "Understand computer fundamentals.",
+        "Learn networking concepts.",
+        "Study cybersecurity principles.",
+        "Explore security tools in authorised labs.",
+        "Develop practical projects."
+    ]
+},
+
+{
+    name: "Web Developer",
+    category: "Technology",
+    icon: "🌐",
+    description: "Create interactive and responsive websites.",
+    skills: ["HTML", "CSS", "JavaScript", "Problem Solving"],
+    education: "Computer Science, IT or relevant web development training.",
+    roadmap: [
+        "Learn HTML fundamentals.",
+        "Practise CSS layouts and styling.",
+        "Learn JavaScript.",
+        "Build responsive websites.",
+        "Create a personal portfolio."
+    ]
+},
+
+{
+    name: "UI/UX Designer",
+    category: "Design",
+    icon: "🎨",
+    description: "Design attractive and user-friendly digital experiences.",
+    skills: ["Creativity", "Wireframing", "Design Thinking", "User Research"],
+    education: "Design, Computer Science or related qualification.",
+    roadmap: [
+        "Understand design fundamentals.",
+        "Study colour theory and typography.",
+        "Learn wireframing.",
+        "Practise interface design.",
+        "Build a design portfolio."
+    ]
+},
+
+{
+    name: "Graphic Designer",
+    category: "Design",
+    icon: "🖌️",
+    description: "Create visual content for brands and digital platforms.",
+    skills: ["Creativity", "Typography", "Visual Communication"],
+    education: "Graphic Design or related design qualification.",
+    roadmap: [
+        "Learn design principles.",
+        "Understand colour and typography.",
+        "Practise design software.",
+        "Create visual projects.",
+        "Build a portfolio."
+    ]
+},
+
+{
+    name: "Business Analyst",
+    category: "Business",
+    icon: "📈",
+    description: "Analyse business requirements and recommend solutions.",
+    skills: ["Communication", "Analytical Thinking", "Excel", "Problem Solving"],
+    education: "Business Administration, IT or related degree.",
+    roadmap: [
+        "Understand business fundamentals.",
+        "Improve analytical skills.",
+        "Learn Excel and data tools.",
+        "Study business processes.",
+        "Practise case studies."
+    ]
+},
+
+{
+    name: "Digital Marketer",
+    category: "Business",
+    icon: "📱",
+    description: "Promote products and services using digital platforms.",
+    skills: ["Communication", "Content Creation", "Marketing", "Analytics"],
+    education: "Marketing, Business or related qualification.",
+    roadmap: [
+        "Learn digital marketing basics.",
+        "Understand social media platforms.",
+        "Study content marketing.",
+        "Learn SEO fundamentals.",
+        "Practise campaign planning."
+    ]
+},
+
+{
+    name: "Financial Analyst",
+    category: "Business",
+    icon: "💰",
+    description: "Evaluate financial data and support business decisions.",
+    skills: ["Mathematics", "Excel", "Financial Analysis"],
+    education: "Finance, Accounting or Business degree.",
+    roadmap: [
+        "Understand accounting basics.",
+        "Improve mathematical skills.",
+        "Learn spreadsheet tools.",
+        "Study financial statements.",
+        "Practise financial analysis."
+    ]
+},
+
+{
+    name: "Research Scientist",
+    category: "Science",
+    icon: "🔬",
+    description: "Conduct experiments and contribute to scientific research.",
+    skills: ["Research", "Observation", "Critical Thinking"],
+    education: "Relevant science degree and often postgraduate study.",
+    roadmap: [
+        "Build a strong science foundation.",
+        "Develop research skills.",
+        "Learn experimental methods.",
+        "Explore research projects.",
+        "Consider higher education."
+    ]
+},
+
+{
+    name: "Environmental Scientist",
+    category: "Science",
+    icon: "🌍",
+    description: "Study environmental challenges and sustainability.",
+    skills: ["Research", "Data Analysis", "Scientific Thinking"],
+    education: "Environmental Science or related degree.",
+    roadmap: [
+        "Study environmental science.",
+        "Understand ecosystems.",
+        "Learn research methods.",
+        "Study environmental data.",
+        "Participate in research projects."
+    ]
+},
+
+{
+    name: "Doctor",
+    category: "Healthcare",
+    icon: "🩺",
+    description: "Diagnose medical conditions and provide patient care.",
+    skills: ["Medical Knowledge", "Communication", "Decision Making"],
+    education: "Recognised medical degree and required training.",
+    roadmap: [
+        "Build a strong science foundation.",
+        "Prepare for medical entrance requirements.",
+        "Complete recognised medical education.",
+        "Undertake required clinical training.",
+        "Meet professional registration requirements."
+    ]
+},
+
+{
+    name: "Nurse",
+    category: "Healthcare",
+    icon: "🏥",
+    description: "Support patients and provide professional healthcare services.",
+    skills: ["Patient Care", "Communication", "Teamwork"],
+    education: "Recognised nursing qualification.",
+    roadmap: [
+        "Learn biology fundamentals.",
+        "Choose a recognised nursing programme.",
+        "Complete clinical training.",
+        "Develop patient care skills.",
+        "Meet professional registration requirements."
+    ]
+}
+
+];
+
+// SAVED CAREERS
+
+let savedCareers = [];
+
+try {
+    const stored = JSON.parse(
+        localStorage.getItem("careerCompassSaved") || "[]"
+    );
+
+    if (Array.isArray(stored)) {
+        savedCareers = stored.filter(
+            name => careers.some(career => career.name === name)
+        );
+    }
+} catch (error) {
+    savedCareers = [];
+}
+
+// DISPLAY CAREERS
+
+function displayCareers(list) {
+
+    const grid = document.getElementById("careerGrid");
+
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+
+        grid.innerHTML = `
+            <div class="empty-message">
+                <h2>No careers found!</h2>
+                <p>Try another search or category.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    list.forEach(career => {
+
+        const isSaved = savedCareers.includes(career.name);
+
+        const index = careers.indexOf(career);
+
+        grid.innerHTML += `
+
+            <div class="career-card">
+
+                <div class="career-icon">${career.icon}</div>
+
+                <span class="category">${career.category}</span>
+
+                <h3>${career.name}</h3>
+
+                <p>${career.description}</p>
+
+                <div class="skills-preview">
+                    <strong>Key Skills:</strong><br>
+                    ${career.skills.slice(0,3).join(" • ")}
+                </div>
+
+                <div class="card-buttons">
+
+                    <button class="details-btn"
+                        onclick="showDetails(${index})">
+                        View Details →
+                    </button>
+
+                    <button class="save-btn ${isSaved ? "saved" : ""}"
+                        onclick="toggleSave(${index})">
+                        ${isSaved ? "★ Saved" : "☆ Save"}
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+// SEARCH AND FILTER
+
+function filterCareers() {
+
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+    const category = document.getElementById("categoryFilter").value;
+
+    const filtered = careers.filter(career => {
+
+        const matchesSearch =
+            career.name.toLowerCase().includes(search) ||
+            career.description.toLowerCase().includes(search) ||
+            career.skills.some(skill =>
+                skill.toLowerCase().includes(search)
+            );
+
+        const matchesCategory =
+            category === "All" || career.category === category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    displayCareers(filtered);
+
+}
+
+// SHOW ALL CAREERS
+
+function showAll() {
+
+    document.getElementById("searchInput").value = "";
+
+    document.getElementById("categoryFilter").value = "All";
+
+    displayCareers(careers);
+
+}
+
+// SHOW SAVED CAREERS
+
+function showSaved() {
+
+    document.getElementById("searchInput").value = "";
+
+    document.getElementById("categoryFilter").value = "All";
+
+    const filtered = careers.filter(
+        career => savedCareers.includes(career.name)
+    );
+
+    displayCareers(filtered);
+
+}
+
+// SAVE AND REMOVE CAREERS
+
+function toggleSave(index) {
+
+    const name = careers[index].name;
+
+    if (savedCareers.includes(name)) {
+
+        savedCareers = savedCareers.filter(
+            career => career !== name
+        );
+
+    } else {
+
+        savedCareers.push(name);
+
+    }
+
+    localStorage.setItem(
+        "careerCompassSaved",
+        JSON.stringify(savedCareers)
+    );
+
+    filterCareers();
+
+    displaySaved();
+
+}
+
+// DISPLAY SAVED LIST
+
+function displaySaved() {
+
+    const savedList = document.getElementById("savedList");
+
+    if (savedCareers.length === 0) {
+
+        savedList.innerHTML = "<p>No saved careers yet.</p>";
+
+        return;
+    }
+
+    savedList.innerHTML = "";
+
+    savedCareers.forEach(name => {
+
+        savedList.innerHTML += `
+            <div class="saved-item">
+                ⭐ ${name}
+            </div>
+        `;
+
+    });
+
+}
+
+// CAREER DETAILS
+
+function showDetails(index) {
+
+    const career = careers[index];
+
+    const details = document.getElementById("modalDetails");
+
+    details.innerHTML = `
+
+        <h2>${career.icon} ${career.name}</h2>
+
+        <span class="category">${career.category}</span>
+
+        <p>${career.description}</p>
+
+        <h3>Required Skills</h3>
+
+        <ul>
+            ${career.skills.map(skill => `<li>${skill}</li>`).join("")}
+        </ul>
+
+        <h3>Educational Qualification</h3>
+
+        <p>${career.education}</p>
+
+        <h3>Learning Roadmap</h3>
+
+        <ul>
+            ${career.roadmap.map(step => `<li>${step}</li>`).join("")}
+        </ul>
+
+    `;
+
+    document.getElementById("careerModal").style.display = "flex";
+
+}
+
+// CLOSE MODAL
+
+function closeModal() {
+
+    document.getElementById("careerModal").style.display = "none";
+
+}
+
+document.getElementById("careerModal").addEventListener("click",
+    function(event) {
+
+        if (event.target === this) {
+            closeModal();
+        }
+
+    }
+);
+
+// LIVE SEARCH
+
+document.getElementById("searchInput")
+.addEventListener("input", filterCareers);
+
+document.getElementById("categoryFilter")
+.addEventListener("change", filterCareers);
+
+// DARK MODE
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+}
+
+// INITIAL DISPLAY
+
+displayCareers(careers);
+
+displaySaved();
+
+</script>
+
+</body>
+</html>

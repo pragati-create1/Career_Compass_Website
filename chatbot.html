@@ -1,0 +1,1040 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ask Career Compass questions about careers, skills and learning paths.">
+<title>Career Chatbot | Career Compass</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #f6f0e7;
+    --card: #fffdf9;
+    --soft: #eee8f7;
+    --text: #302747;
+    --muted: #70677d;
+    --purple: #7655a8;
+    --purple-dark: #573982;
+    --mint: #d9eee2;
+    --border: #e5dced;
+    --shadow: 0 8px 25px rgba(72,48,100,.08);
+}
+
+body.dark {
+    --bg: #211c2d;
+    --card: #30283e;
+    --soft: #40334f;
+    --text: #f5efff;
+    --muted: #c5b9d4;
+    --purple: #c4a6ed;
+    --purple-dark: #a986d9;
+    --mint: #344d43;
+    --border: #51435f;
+    --shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: .3s;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+/* NAVIGATION */
+
+.header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    width: min(1150px, 90%);
+    margin: auto;
+}
+
+.navbar {
+    min-height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.logo strong {
+    color: var(--purple);
+}
+
+.logo-icon {
+    display: inline-grid;
+    place-items: center;
+    background: var(--purple);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.nav-links a {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--purple);
+}
+
+.nav-links .login-link {
+    background: var(--purple);
+    color: white;
+    padding: 10px 13px;
+    border-radius: 8px;
+}
+
+.theme-toggle, .menu-toggle {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    background: var(--soft);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 17px;
+    color: var(--text);
+    flex-shrink: 0;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+/* HERO */
+
+.hero {
+    padding: 42px 0 25px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 85% 15%, var(--mint), transparent 35%),
+        radial-gradient(circle at 10% 90%, var(--soft), transparent 35%);
+}
+
+.eyebrow {
+    color: var(--purple);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: clamp(29px, 5vw, 40px);
+    margin: 13px 0;
+}
+
+.hero h1 span {
+    color: var(--purple);
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* CHAT AREA */
+
+.chat-section {
+    padding: 35px 0 65px;
+}
+
+.chat-container {
+    max-width: 850px;
+    margin: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* CHAT HEADER */
+
+.chat-header {
+    background: var(--purple);
+    color: white;
+    padding: 20px 23px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bot-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bot-avatar {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    background: white;
+    color: var(--purple-dark);
+    border-radius: 50%;
+    font-size: 23px;
+}
+
+.bot-info h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.bot-info p {
+    font-size: 11px;
+    opacity: .9;
+}
+
+.status-dot {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background: #a5edbe;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.clear-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,.6);
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* MESSAGES */
+
+.chat-messages {
+    height: 390px;
+    padding: 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    background: var(--bg);
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    max-width: 85%;
+}
+
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: var(--soft);
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.message.user .message-avatar {
+    background: var(--mint);
+}
+
+.message-content {
+    padding: 13px 15px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px 14px 14px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.message.user .message-content {
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 14px 4px 14px 14px;
+}
+
+.message-content strong {
+    color: var(--purple);
+}
+
+.message.user .message-content strong {
+    color: white;
+}
+
+/* QUICK QUESTIONS */
+
+.quick-section {
+    padding: 18px 22px;
+    border-top: 1px solid var(--border);
+}
+
+.quick-section h3 {
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.quick-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.quick-buttons button {
+    padding: 9px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--soft);
+    color: var(--text);
+    font-size: 11px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.quick-buttons button:hover {
+    background: var(--purple);
+    color: white;
+}
+
+/* INPUT AREA */
+
+.chat-input-area {
+    padding: 17px 20px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+}
+
+.chat-input-area input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    border-radius: 25px;
+    border: 1px solid var(--border);
+    outline: none;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--purple);
+}
+
+.send-btn {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 0 21px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    background: var(--purple-dark);
+}
+
+.chat-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #302747;
+    color: white;
+    padding: 35px 0 18px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 25px;
+}
+
+.footer p {
+    color: #d2c8df;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+}
+
+.footer-links a {
+    font-size: 13px;
+    color: #eee7f5;
+}
+
+.copyright {
+    text-align: center;
+    border-top: 1px solid #554968;
+    padding-top: 17px;
+    color: #d2c8df;
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1100px) {
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        display: none;
+        order: 4;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 12px;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+    }
+
+    .nav-links .login-link {
+        text-align: center;
+        margin-top: 8px;
+    }
+}
+
+@media(max-width: 600px) {
+    .chat-messages {
+        height: 420px;
+        padding: 15px;
+    }
+
+    .message {
+        max-width: 95%;
+    }
+
+    .chat-input-area {
+        padding: 12px;
+    }
+
+    .chat-input-area input {
+        padding: 12px;
+    }
+
+    .send-btn {
+        padding: 0 15px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .clear-btn {
+        padding: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header class="header">
+<nav class="navbar container">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">↗</span>
+        Career <strong>Compass</strong>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle"
+    aria-label="Open navigation menu"
+    aria-expanded="false">☰</button>
+
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="career.html">Explore Careers</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="skills.html">Skills & Courses</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="chatbot.html" class="active">Chatbot</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="login-link">Login / Sign Up</a>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle"
+    aria-label="Switch to dark mode">🌙</button>
+
+</nav>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+
+    <span class="eyebrow">YOUR PERSONAL CAREER GUIDE</span>
+
+    <h1>Ask <span>Career Compass!</span></h1>
+
+    <p>
+        Have questions about your future?
+        Chat with our career assistant to explore career options,
+        skills, learning paths and more.
+    </p>
+
+</div>
+</section>
+
+
+<!-- CHATBOT -->
+<main class="chat-section">
+<div class="container">
+
+<div class="chat-container">
+
+    <!-- CHAT HEADER -->
+    <div class="chat-header">
+
+        <div class="bot-info">
+
+            <div class="bot-avatar">🤖</div>
+
+            <div>
+                <h2>Career Compass Assistant</h2>
+                <p><span class="status-dot"></span> Available to help</p>
+            </div>
+
+        </div>
+
+        <button class="clear-btn" id="clearChat">
+            ↻ Clear Chat
+        </button>
+
+    </div>
+
+
+    <!-- CHAT MESSAGES -->
+    <div class="chat-messages" id="chatMessages"
+    aria-live="polite">
+
+        <div class="message bot">
+
+            <div class="message-avatar">🤖</div>
+
+            <div class="message-content">
+                Hello! Welcome to <strong>Career Compass</strong>! 👋
+                <br><br>
+                I'm your career guidance assistant.
+                You can ask me about career options, programming,
+                skills, courses, and career planning.
+                <br><br>
+                How can I help you today?
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK QUESTIONS -->
+    <div class="quick-section">
+
+        <h3>Suggested Questions</h3>
+
+        <div class="quick-buttons">
+
+            <button class="quick-question">
+                Which career is best for me?
+            </button>
+
+            <button class="quick-question">
+                How can I become a software developer?
+            </button>
+
+            <button class="quick-question">
+                What skills should I learn?
+            </button>
+
+            <button class="quick-question">
+                What is data science?
+            </button>
+
+            <button class="quick-question">
+                How do I prepare for interviews?
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- INPUT -->
+    <form class="chat-input-area" id="chatForm">
+
+        <input type="text"
+        id="userInput"
+        placeholder="Type your career question here..."
+        autocomplete="off"
+        maxlength="300"
+        aria-label="Type your message">
+
+        <button type="submit" class="send-btn">
+            Send ➤
+        </button>
+
+    </form>
+
+</div>
+
+<p class="chat-note">
+    Note: This is a front-end demonstration chatbot.
+    Its responses are based on predefined career guidance information.
+</p>
+
+</div>
+</main>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="container footer-content">
+
+    <div>
+        <h2>Career Compass</h2>
+        <p>Find Your Direction. Shape Your Future.</p>
+    </div>
+
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="career.html">Careers</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+</div>
+
+<div class="copyright">
+    © <span id="currentYear"></span> Career Compass.
+    All Rights Reserved.
+</div>
+
+</footer>
+
+
+<script>
+
+// GET HTML ELEMENTS
+
+const chatMessages = document.getElementById("chatMessages");
+const chatForm = document.getElementById("chatForm");
+const userInput = document.getElementById("userInput");
+const clearChat = document.getElementById("clearChat");
+
+
+// ADD MESSAGE TO CHAT
+
+function addMessage(message, sender) {
+
+    const messageDiv = document.createElement("div");
+
+    messageDiv.className = "message " + sender;
+
+    const avatar = document.createElement("div");
+    avatar.className = "message-avatar";
+    avatar.textContent = sender === "bot" ? "🤖" : "👤";
+
+    const content = document.createElement("div");
+    content.className = "message-content";
+
+    // Keep the user's input as plain text.
+    // Bot responses below are created from trusted predefined content.
+    if (sender === "user") {
+        content.textContent = message;
+    } else {
+        content.innerHTML = message;
+    }
+
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+
+    chatMessages.appendChild(messageDiv);
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+// GET BOT RESPONSE
+
+function getBotResponse(question) {
+
+    const text = question.toLowerCase();
+
+    if (
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ) {
+        return "Hello! 👋 Welcome to Career Compass. You can ask me about careers, programming, skills, courses or interviews.";
+    }
+
+    if (
+        text.includes("thank")
+    ) {
+        return "You're welcome! 😊 Keep learning and exploring. Career Compass is here to help you plan your journey.";
+    }
+
+    if (
+        text.includes("career") &&
+        (text.includes("best") || text.includes("choose") || text.includes("me"))
+    ) {
+        return "Choosing a career depends on your interests, strengths and goals. 💡<br><br>For example:<br>• Technology – Software Developer, Data Scientist<br>• Creative – UI/UX Designer, Graphic Designer<br>• Business – Business Analyst, Marketing Specialist<br><br>Try our <strong>Career Assessment</strong> page to explore your interests.";
+    }
+
+    if (
+        text.includes("software") ||
+        text.includes("developer") ||
+        text.includes("programmer")
+    ) {
+        return "To become a Software Developer, start with these steps:<br><br>1. Learn a programming language such as Python, C or Java.<br>2. Practice data structures and algorithms.<br>3. Learn HTML, CSS and JavaScript.<br>4. Build small projects.<br>5. Learn Git and GitHub basics.<br>6. Prepare a project portfolio.";
+    }
+
+    if (
+        text.includes("data science") ||
+        text.includes("data scientist")
+    ) {
+        return "Data Science involves collecting, analyzing and interpreting data to discover useful information. 📊<br><br>Important skills include:<br>• Python<br>• Statistics and mathematics<br>• SQL<br>• Data visualization<br>• Basic machine learning<br><br>Start with Python and basic statistics.";
+    }
+
+    if (
+        text.includes("cyber") ||
+        text.includes("security")
+    ) {
+        return "Cybersecurity focuses on protecting computers, networks and information.<br><br>Begin by learning:<br>• Computer fundamentals<br>• Networking basics<br>• Linux fundamentals<br>• Security principles<br>• Defensive security practices<br><br>Practice only in authorized learning environments.";
+    }
+
+    if (
+        text.includes("ui") ||
+        text.includes("ux") ||
+        text.includes("design")
+    ) {
+        return "UI/UX Design focuses on creating useful and user-friendly digital experiences. 🎨<br><br>Start learning:<br>• Colour theory<br>• Typography<br>• Layout and spacing<br>• User research basics<br>• Wireframing and prototyping<br>• Figma fundamentals";
+    }
+
+    if (
+        text.includes("skill") ||
+        text.includes("learn")
+    ) {
+        return "Some useful skills for students interested in technology include:<br><br>• Programming – Python, C or Java<br>• Web Development – HTML, CSS and JavaScript<br>• Database – SQL<br>• Problem Solving<br>• Communication and teamwork<br>• Git and GitHub basics<br><br>Choose skills based on the career you want to explore.";
+    }
+
+    if (
+        text.includes("course") ||
+        text.includes("certification")
+    ) {
+        return "You can begin with beginner-friendly learning topics such as:<br><br>1. Python Programming<br>2. Web Development Fundamentals<br>3. Database Management and SQL<br>4. Data Structures<br>5. Introduction to Data Science<br><br>Choose a course that matches your current level and practice what you learn.";
+    }
+
+    if (
+        text.includes("interview") ||
+        text.includes("job") ||
+        text.includes("resume")
+    ) {
+        return "Here are some ways to prepare for career opportunities:<br><br>• Build a clear beginner-friendly resume.<br>• Practice programming fundamentals.<br>• Complete small projects.<br>• Learn to explain your projects.<br>• Improve communication skills.<br>• Explore suitable internships and entry-level opportunities.";
+    }
+
+    if (
+        text.includes("roadmap") ||
+        text.includes("plan")
+    ) {
+        return "A career roadmap helps you organize your learning journey. 🧭<br><br>Visit our <strong>Career Roadmap</strong> page, select your preferred career and follow the suggested steps. You can mark completed steps and track your progress.";
+    }
+
+    if (
+        text.includes("assessment") ||
+        text.includes("interest")
+    ) {
+        return "Our Career Assessment page contains questions about your interests and preferences. Answer them to see suggested career categories that you can explore further.";
+    }
+
+    if (
+        text.includes("html") ||
+        text.includes("css") ||
+        text.includes("javascript") ||
+        text.includes("website")
+    ) {
+        return "Web Development is the process of creating websites and web applications. 🌐<br><br>Start with:<br>• HTML – Structure of a webpage<br>• CSS – Styling and layout<br>• JavaScript – Interactivity<br><br>Build a simple webpage first, then gradually add more features.";
+    }
+
+    if (
+        text.includes("python") ||
+        text.includes("programming")
+    ) {
+        return "Programming helps you give instructions to computers to solve problems. Python is a beginner-friendly language.<br><br>Start with variables, data types, operators, conditions, loops, functions and lists. Practice small programs regularly.";
+    }
+
+    if (
+        text.includes("college") ||
+        text.includes("student") ||
+        text.includes("beginner")
+    ) {
+        return "As a student, focus on building a strong foundation. 📚<br><br>• Learn programming fundamentals.<br>• Practice problem solving.<br>• Complete academic projects.<br>• Explore different career fields.<br>• Develop communication skills.<br><br>Progress step by step. You do not need to learn everything at once!";
+    }
+
+    if (
+        text.includes("help")
+    ) {
+        return "Of course! I can help with:<br><br>• Career selection<br>• Software development<br>• Data Science<br>• Cybersecurity<br>• UI/UX Design<br>• Programming skills<br>• Courses and interviews<br><br>Type a question about any of these topics.";
+    }
+
+    return "That's an interesting question! 😊 I can currently answer questions about career choices, software development, data science, cybersecurity, UI/UX design, programming, skills, courses and interviews. Try asking about one of these topics.";
+}
+
+
+// SEND MESSAGE
+
+function sendMessage(message) {
+
+    const question = message.trim();
+
+    if (question === "") {
+        return;
+    }
+
+    addMessage(question, "user");
+
+    userInput.value = "";
+
+    // Show a brief thinking indicator
+    const thinkingDiv = document.createElement("div");
+    thinkingDiv.className = "message bot";
+    thinkingDiv.id = "thinkingMessage";
+
+    thinkingDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-content">Thinking...</div>
+    `;
+
+    chatMessages.appendChild(thinkingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(function() {
+
+        const thinkingMessage =
+            document.getElementById("thinkingMessage");
+
+        if (thinkingMessage) {
+            thinkingMessage.remove();
+        }
+
+        const response = getBotResponse(question);
+
+        addMessage(response, "bot");
+
+    }, 600);
+
+}
+
+
+// FORM SUBMISSION
+
+chatForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    sendMessage(userInput.value);
+
+});
+
+
+// QUICK QUESTION BUTTONS
+
+document.querySelectorAll(".quick-question")
+.forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        sendMessage(this.textContent);
+
+    });
+
+});
+
+
+// CLEAR CHAT
+
+clearChat.addEventListener("click", function() {
+
+    const confirmClear = confirm(
+        "Do you want to clear the entire conversation?"
+    );
+
+    if (confirmClear) {
+
+        chatMessages.innerHTML = "";
+
+        addMessage(
+            "Hello! Welcome back to Career Compass! 👋<br><br>I'm your career guidance assistant. What would you like to know today?",
+            "bot"
+        );
+
+    }
+
+});
+
+
+// DARK AND LIGHT MODE
+
+const themeToggle = document.getElementById("themeToggle");
+
+if (localStorage.getItem("careerCompassTheme") === "dark") {
+    document.body.classList.add("dark");
+}
+
+function updateThemeButton() {
+
+    const isDark = document.body.classList.contains("dark");
+
+    themeToggle.textContent = isDark ? "☀️" : "🌙";
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light mode" : "Switch to dark mode"
+    );
+
+}
+
+updateThemeButton();
+
+themeToggle.addEventListener("click", function() {
+
+    document.body.classList.toggle("dark");
+
+    const theme = document.body.classList.contains("dark")
+        ? "dark"
+        : "light";
+
+    localStorage.setItem("careerCompassTheme", theme);
+
+    updateThemeButton();
+
+});
+
+
+// MOBILE NAVIGATION
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function() {
+
+    navLinks.classList.toggle("show");
+
+    const isOpen = navLinks.classList.contains("show");
+
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+
+    menuToggle.setAttribute("aria-expanded", isOpen);
+
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+    link.addEventListener("click", function() {
+
+        navLinks.classList.remove("show");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+
+    });
+
+});
+
+
+// CURRENT YEAR
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

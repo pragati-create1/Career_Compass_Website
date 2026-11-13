@@ -1,0 +1,1195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills & Learning | Career Compass</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #f6f0e7;
+    --card: #fffdf9;
+    --soft: #eee8f7;
+    --text: #302747;
+    --muted: #70677d;
+    --purple: #7655a8;
+    --purple-dark: #573982;
+    --mint: #d9eee2;
+    --border: #e5dced;
+    --shadow: 0 8px 25px rgba(72,48,100,.08);
+}
+
+body.dark {
+    --bg: #211c2d;
+    --card: #30283e;
+    --soft: #40334f;
+    --text: #f5efff;
+    --muted: #c5b9d4;
+    --purple: #c4a6ed;
+    --purple-dark: #a986d9;
+    --mint: #344d43;
+    --border: #51435f;
+    --shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: .3s;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, select {
+    font-family: inherit;
+}
+
+.container {
+    width: min(1150px, 90%);
+    margin: auto;
+}
+
+/* NAVIGATION */
+
+.header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    min-height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.logo strong {
+    color: var(--purple);
+}
+
+.logo-icon {
+    display: inline-grid;
+    place-items: center;
+    background: var(--purple);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.nav-links a {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--purple);
+}
+
+.nav-links .login-link {
+    background: var(--purple);
+    color: white;
+    padding: 10px 13px;
+    border-radius: 8px;
+}
+
+.theme-toggle, .menu-toggle {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    background: var(--soft);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 17px;
+    color: var(--text);
+    flex-shrink: 0;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+/* PAGE INTRO */
+
+.page-intro {
+    padding: 65px 0 45px;
+    text-align: center;
+    background: radial-gradient(circle at top right, var(--mint), transparent 45%);
+}
+
+.eyebrow {
+    color: var(--purple);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.page-intro h1 {
+    font-size: clamp(30px, 5vw, 45px);
+    margin: 15px 0;
+}
+
+.page-intro h1 span {
+    color: var(--purple);
+}
+
+.page-intro p {
+    max-width: 650px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* PROGRESS */
+
+.progress-section {
+    margin: 20px auto 35px;
+    padding: 25px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+.progress-top span:last-child {
+    color: var(--purple);
+}
+
+.progress-track {
+    height: 12px;
+    background: var(--soft);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7655a8, #a9d5bd);
+    border-radius: 20px;
+    transition: .3s;
+}
+
+/* SEARCH AND FILTERS */
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 35px 0 25px;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 220px;
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+}
+
+.filter-select {
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+}
+
+/* SKILL CARDS */
+
+.section-title {
+    margin: 35px 0 20px;
+    font-size: 23px;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-bottom: 60px;
+}
+
+.skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 23px;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+}
+
+.skill-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    background: var(--mint);
+    border-radius: 13px;
+    font-size: 25px;
+    margin-bottom: 17px;
+}
+
+.skill-card h3 {
+    font-size: 18px;
+    margin-bottom: 9px;
+}
+
+.skill-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 44px;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 17px 0;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.level {
+    padding: 5px 9px;
+    background: var(--soft);
+    color: var(--purple);
+    border-radius: 15px;
+    font-weight: 700;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 9px;
+}
+
+.card-buttons button {
+    flex: 1;
+    padding: 11px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--purple);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.learn-btn {
+    background: var(--purple);
+    color: white;
+}
+
+.complete-btn {
+    background: transparent;
+    color: var(--purple);
+}
+
+.complete-btn.done {
+    background: var(--mint);
+    color: var(--text);
+    border-color: var(--mint);
+}
+
+.empty-message {
+    display: none;
+    text-align: center;
+    color: var(--muted);
+    padding: 35px;
+    background: var(--card);
+    border-radius: 14px;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 15, 30, .65);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--card);
+    color: var(--text);
+    width: min(500px, 100%);
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    color: var(--purple);
+    margin-bottom: 15px;
+    padding-right: 25px;
+}
+
+.modal-content p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.modal-content h3 {
+    margin: 18px 0 10px;
+    font-size: 15px;
+}
+
+.modal-content ul {
+    padding-left: 22px;
+    color: var(--muted);
+    line-height: 2;
+    font-size: 13px;
+}
+
+.modal-action {
+    margin-top: 20px;
+    padding: 12px 18px;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* FOOTER */
+
+.footer {
+    background: #302747;
+    color: white;
+    padding: 35px 0 18px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 25px;
+}
+
+.footer p {
+    color: #d2c8df;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+}
+
+.footer-links a {
+    font-size: 13px;
+    color: #eee7f5;
+}
+
+.copyright {
+    text-align: center;
+    border-top: 1px solid #554968;
+    padding-top: 17px;
+    color: #d2c8df;
+    font-size: 12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1100px) {
+    .menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+
+    .nav-links {
+        display: none;
+        order: 4;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 12px;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+    }
+
+    .nav-links .login-link {
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    .skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .skill-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .search-box,
+    .filter-select {
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .progress-top {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header class="header">
+<nav class="navbar container">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">↗</span>
+        Career <strong>Compass</strong>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle"
+    aria-label="Open navigation menu"
+    aria-expanded="false">☰</button>
+
+    <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="career.html">Explore Careers</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="recommendations.html">Recommendations</a>
+        <a href="skills.html" class="active">Skills & Courses</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="chatbot.html">Chatbot</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="login-link">Login / Sign Up</a>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle"
+    aria-label="Switch to dark mode">🌙</button>
+
+</nav>
+</header>
+
+
+<!-- INTRODUCTION -->
+<section class="page-intro">
+<div class="container">
+
+    <span class="eyebrow">LEARN • PRACTICE • GROW</span>
+
+    <h1>Build Skills. <span>Shape Your Future.</span></h1>
+
+    <p>
+        Discover important skills, explore learning topics
+        and prepare yourself for your dream career.
+        Start learning one step at a time!
+    </p>
+
+</div>
+</section>
+
+
+<main class="container">
+
+    <!-- LEARNING PROGRESS -->
+    <section class="progress-section">
+
+        <div class="progress-top">
+            <span>Your Learning Progress</span>
+            <span id="progressText">0% Completed</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <p style="color:var(--muted);font-size:12px;margin-top:12px">
+            <span id="completedCount">0</span> of
+            <span id="totalCount">0</span> skills completed
+        </p>
+
+    </section>
+
+
+    <!-- SEARCH -->
+    <h2 class="section-title">Explore Learning Resources</h2>
+
+    <div class="controls">
+
+        <input type="text" id="searchInput"
+        class="search-box"
+        placeholder="🔍 Search skills...">
+
+        <select id="levelFilter" class="filter-select">
+            <option value="all">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+
+    </div>
+
+
+    <!-- CATEGORY FILTERS -->
+    <div class="filter-buttons">
+
+        <button class="filter-btn active" data-category="All">All Skills</button>
+        <button class="filter-btn" data-category="Technology">Technology</button>
+        <button class="filter-btn" data-category="Design">Design</button>
+        <button class="filter-btn" data-category="Business">Business</button>
+        <button class="filter-btn" data-category="Communication">Communication</button>
+        <button class="filter-btn" data-category="Science">Science</button>
+
+    </div>
+
+
+    <!-- SKILL CARDS -->
+    <div class="skill-grid" id="skillGrid"></div>
+
+    <div class="empty-message" id="emptyMessage">
+        No matching skills found. Try another search or category.
+    </div>
+
+</main>
+
+
+<!-- LEARNING PLAN MODAL -->
+<div class="modal" id="learningModal">
+
+    <div class="modal-content">
+
+        <button class="close-modal" id="closeModal"
+        aria-label="Close">&times;</button>
+
+        <h2 id="modalTitle">Learning Plan</h2>
+
+        <p id="modalDescription"></p>
+
+        <h3>What You Will Learn</h3>
+        <ul id="modalTopics"></ul>
+
+        <h3>Suggested Practice</h3>
+        <p id="modalPractice"></p>
+
+        <button class="modal-action" id="modalComplete">
+            Mark as Completed
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="container footer-content">
+
+    <div>
+        <h2>Career Compass</h2>
+        <p>Find Your Direction. Shape Your Future.</p>
+    </div>
+
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="career.html">Careers</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+</div>
+
+<div class="copyright">
+    © <span id="currentYear"></span> Career Compass.
+    All Rights Reserved.
+</div>
+
+</footer>
+
+
+<script>
+
+// SKILL DATA
+
+const skills = [
+
+{
+id: 1,
+name: "Python Programming",
+category: "Technology",
+icon: "🐍",
+level: "Beginner",
+duration: "4 Weeks",
+description: "Learn programming fundamentals using Python.",
+topics: ["Variables and data types", "Conditions and loops", "Functions", "Lists and dictionaries"],
+practice: "Create a simple calculator and a number guessing program."
+},
+
+{
+id: 2,
+name: "Web Development",
+category: "Technology",
+icon: "💻",
+level: "Beginner",
+duration: "6 Weeks",
+description: "Learn how to create websites using HTML, CSS and JavaScript.",
+topics: ["HTML structure", "CSS styling", "JavaScript basics", "Responsive web design"],
+practice: "Build a personal portfolio website."
+},
+
+{
+id: 3,
+name: "Data Analysis",
+category: "Technology",
+icon: "📊",
+level: "Intermediate",
+duration: "5 Weeks",
+description: "Understand data and learn how to find useful insights.",
+topics: ["Data collection", "Excel basics", "Python data handling", "Data visualization"],
+practice: "Analyze a small student marks dataset."
+},
+
+{
+id: 4,
+name: "Artificial Intelligence",
+category: "Technology",
+icon: "🤖",
+level: "Advanced",
+duration: "8 Weeks",
+description: "Explore artificial intelligence and its applications.",
+topics: ["AI fundamentals", "Machine learning concepts", "Neural networks", "AI applications"],
+practice: "Research an everyday application of AI."
+},
+
+{
+id: 5,
+name: "UI/UX Design",
+category: "Design",
+icon: "🎨",
+level: "Beginner",
+duration: "4 Weeks",
+description: "Learn how to design user-friendly digital experiences.",
+topics: ["Design principles", "Colour theory", "Wireframes", "User experience"],
+practice: "Design a simple mobile application screen."
+},
+
+{
+id: 6,
+name: "Graphic Design",
+category: "Design",
+icon: "🖌️",
+level: "Beginner",
+duration: "3 Weeks",
+description: "Explore visual communication and creative design.",
+topics: ["Typography", "Layout design", "Colour combinations", "Visual hierarchy"],
+practice: "Create a poster for a college event."
+},
+
+{
+id: 7,
+name: "Digital Marketing",
+category: "Business",
+icon: "📱",
+level: "Beginner",
+duration: "4 Weeks",
+description: "Understand how businesses promote products online.",
+topics: ["Social media marketing", "SEO basics", "Content creation", "Marketing strategy"],
+practice: "Prepare a simple social media campaign plan."
+},
+
+{
+id: 8,
+name: "Financial Literacy",
+category: "Business",
+icon: "💰",
+level: "Beginner",
+duration: "3 Weeks",
+description: "Learn basic financial concepts and money management.",
+topics: ["Budgeting", "Saving", "Basic investment concepts", "Financial planning"],
+practice: "Create a sample monthly budget."
+},
+
+{
+id: 9,
+name: "Communication Skills",
+category: "Communication",
+icon: "🗣️",
+level: "Beginner",
+duration: "2 Weeks",
+description: "Improve your ability to communicate clearly and confidently.",
+topics: ["Verbal communication", "Active listening", "Writing skills", "Presentation basics"],
+practice: "Prepare a short presentation on a topic you enjoy."
+},
+
+{
+id: 10,
+name: "Leadership Skills",
+category: "Communication",
+icon: "🌟",
+level: "Intermediate",
+duration: "3 Weeks",
+description: "Develop teamwork, decision-making and leadership abilities.",
+topics: ["Teamwork", "Decision making", "Problem solving", "Time management"],
+practice: "Plan a small group activity and coordinate the tasks."
+},
+
+{
+id: 11,
+name: "Scientific Research",
+category: "Science",
+icon: "🔬",
+level: "Intermediate",
+duration: "5 Weeks",
+description: "Understand how scientific investigations are conducted.",
+topics: ["Research questions", "Observation", "Data collection", "Report writing"],
+practice: "Prepare a short report based on a simple research question."
+},
+
+{
+id: 12,
+name: "Environmental Science",
+category: "Science",
+icon: "🌍",
+level: "Beginner",
+duration: "4 Weeks",
+description: "Explore environmental systems and sustainability.",
+topics: ["Ecosystems", "Climate concepts", "Pollution", "Sustainable development"],
+practice: "Create an awareness presentation about an environmental topic."
+}
+
+];
+
+
+// ELEMENTS
+
+const skillGrid = document.getElementById("skillGrid");
+const searchInput = document.getElementById("searchInput");
+const levelFilter = document.getElementById("levelFilter");
+const emptyMessage = document.getElementById("emptyMessage");
+
+let selectedCategory = "All";
+let currentSkill = null;
+
+let completedSkills = JSON.parse(
+    localStorage.getItem("careerCompassCompletedSkills") || "[]"
+);
+
+
+// DISPLAY SKILLS
+
+function displaySkills() {
+
+    const searchText = searchInput.value.toLowerCase();
+    const selectedLevel = levelFilter.value;
+
+    const filteredSkills = skills.filter(skill => {
+
+        const matchesSearch =
+            skill.name.toLowerCase().includes(searchText) ||
+            skill.description.toLowerCase().includes(searchText);
+
+        const matchesCategory =
+            selectedCategory === "All" ||
+            skill.category === selectedCategory;
+
+        const matchesLevel =
+            selectedLevel === "all" ||
+            skill.level === selectedLevel;
+
+        return matchesSearch && matchesCategory && matchesLevel;
+
+    });
+
+    skillGrid.innerHTML = "";
+
+    emptyMessage.style.display =
+        filteredSkills.length === 0 ? "block" : "none";
+
+    filteredSkills.forEach(skill => {
+
+        const isCompleted = completedSkills.includes(skill.id);
+
+        const card = document.createElement("div");
+        card.className = "skill-card";
+
+        card.innerHTML = `
+            <div class="skill-icon">${skill.icon}</div>
+
+            <h3>${skill.name}</h3>
+
+            <p>${skill.description}</p>
+
+            <div class="skill-info">
+                <span class="level">${skill.level}</span>
+                <span>⏱ ${skill.duration}</span>
+                <span>${skill.category}</span>
+            </div>
+
+            <div class="card-buttons">
+                <button class="learn-btn" data-action="learn">
+                    View Plan
+                </button>
+
+                <button class="complete-btn ${isCompleted ? "done" : ""}"
+                data-action="complete">
+                    ${isCompleted ? "✓ Completed" : "Mark Complete"}
+                </button>
+            </div>
+        `;
+
+        card.querySelector('[data-action="learn"]')
+            .addEventListener("click", () => openLearningPlan(skill.id));
+
+        card.querySelector('[data-action="complete"]')
+            .addEventListener("click", () => toggleComplete(skill.id));
+
+        skillGrid.appendChild(card);
+
+    });
+
+    updateProgress();
+
+}
+
+
+// FILTER BUTTONS
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        document.querySelectorAll(".filter-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+        this.classList.add("active");
+
+        selectedCategory = this.dataset.category;
+
+        displaySkills();
+
+    });
+
+});
+
+
+// SEARCH AND LEVEL FILTER
+
+searchInput.addEventListener("input", displaySkills);
+levelFilter.addEventListener("change", displaySkills);
+
+
+// UPDATE LEARNING PROGRESS
+
+function updateProgress() {
+
+    const total = skills.length;
+    const completed = completedSkills.length;
+
+    const percentage = Math.round((completed / total) * 100);
+
+    document.getElementById("progressText").textContent =
+        percentage + "% Completed";
+
+    document.getElementById("progressFill").style.width =
+        percentage + "%";
+
+    document.getElementById("completedCount").textContent = completed;
+
+    document.getElementById("totalCount").textContent = total;
+
+}
+
+
+// MARK AS COMPLETED
+
+function toggleComplete(id) {
+
+    if (completedSkills.includes(id)) {
+
+        completedSkills = completedSkills.filter(item => item !== id);
+
+    } else {
+
+        completedSkills.push(id);
+
+    }
+
+    localStorage.setItem(
+        "careerCompassCompletedSkills",
+        JSON.stringify(completedSkills)
+    );
+
+    displaySkills();
+
+}
+
+
+// OPEN LEARNING PLAN
+
+const learningModal = document.getElementById("learningModal");
+
+function openLearningPlan(id) {
+
+    const skill = skills.find(item => item.id === id);
+
+    currentSkill = skill;
+
+    document.getElementById("modalTitle").textContent = skill.name;
+
+    document.getElementById("modalDescription").textContent =
+        skill.description + " Estimated duration: " + skill.duration + ".";
+
+    const topicList = document.getElementById("modalTopics");
+
+    topicList.innerHTML = "";
+
+    skill.topics.forEach(topic => {
+
+        const li = document.createElement("li");
+        li.textContent = topic;
+        topicList.appendChild(li);
+
+    });
+
+    document.getElementById("modalPractice").textContent =
+        skill.practice;
+
+    const completeButton = document.getElementById("modalComplete");
+
+    completeButton.textContent =
+        completedSkills.includes(id)
+        ? "Mark as Incomplete"
+        : "Mark as Completed";
+
+    learningModal.style.display = "flex";
+
+}
+
+
+// CLOSE MODAL
+
+document.getElementById("closeModal").addEventListener("click", function() {
+    learningModal.style.display = "none";
+});
+
+learningModal.addEventListener("click", function(event) {
+
+    if (event.target === learningModal) {
+        learningModal.style.display = "none";
+    }
+
+});
+
+
+// COMPLETE FROM MODAL
+
+document.getElementById("modalComplete")
+.addEventListener("click", function() {
+
+    if (currentSkill) {
+        toggleComplete(currentSkill.id);
+
+        this.textContent =
+            completedSkills.includes(currentSkill.id)
+            ? "Mark as Incomplete"
+            : "Mark as Completed";
+    }
+
+});
+
+
+// MOBILE MENU
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function() {
+
+    navLinks.classList.toggle("show");
+
+    const isOpen = navLinks.classList.contains("show");
+
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+    menuToggle.setAttribute("aria-expanded", isOpen);
+
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+    link.addEventListener("click", function() {
+
+        navLinks.classList.remove("show");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+
+    });
+
+});
+
+
+// DARK AND LIGHT MODE
+
+const themeToggle = document.getElementById("themeToggle");
+
+function updateThemeButton() {
+
+    const isDark = document.body.classList.contains("dark");
+
+    themeToggle.textContent = isDark ? "☀️" : "🌙";
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light mode" : "Switch to dark mode"
+    );
+
+}
+
+if (localStorage.getItem("careerCompassTheme") === "dark") {
+    document.body.classList.add("dark");
+}
+
+updateThemeButton();
+
+themeToggle.addEventListener("click", function() {
+
+    document.body.classList.toggle("dark");
+
+    const theme = document.body.classList.contains("dark")
+        ? "dark"
+        : "light";
+
+    localStorage.setItem("careerCompassTheme", theme);
+
+    updateThemeButton();
+
+});
+
+
+// CURRENT YEAR
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+
+// INITIAL DISPLAY
+
+displaySkills();
+
+</script>
+
+</body>
+</html>

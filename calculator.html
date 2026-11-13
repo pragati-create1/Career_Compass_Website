@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator | CareerCompass</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eee8f8, #e8f2dc, #f7efdf);
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6842a6;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .semester {
+            background: #f7f3fc;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .semester h3 {
+            color: #6842a6;
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 6px 4px 6px 0;
+        }
+
+        .add-btn {
+            background: #e5f0d9;
+            color: #315c28;
+        }
+
+        .calculate-btn {
+            background: #6842a6;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .reset-btn {
+            background: #eee;
+            color: #333;
+            width: 100%;
+        }
+
+        .remove-btn {
+            background: #f8dddd;
+            color: #a22;
+            margin-top: 12px;
+        }
+
+        #result {
+            display: none;
+            margin-top: 22px;
+            padding: 22px;
+            text-align: center;
+            background: #eaf3df;
+            border-radius: 12px;
+        }
+
+        #result h2 {
+            color: #315c28;
+            margin-bottom: 10px;
+        }
+
+        #cgpaValue {
+            font-size: 36px;
+            font-weight: bold;
+            color: #6842a6;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #6842a6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .note {
+            color: #777;
+            font-size: 13px;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🧮 CGPA Calculator</h1>
+
+    <p class="description">
+        Calculate your Cumulative Grade Point Average
+        by entering your semester SGPA and credits.
+    </p>
+
+    <div id="semesterContainer">
+
+        <div class="semester">
+            <h3>Semester 1</h3>
+
+            <label>SGPA (0 - 10)</label>
+            <input type="number" class="sgpa"
+                   placeholder="Enter SGPA"
+                   min="0" max="10" step="0.01">
+
+            <label>Total Credits</label>
+            <input type="number" class="credits"
+                   placeholder="Enter credits"
+                   min="1" step="1">
+        </div>
+
+    </div>
+
+    <button class="add-btn" onclick="addSemester()">
+        + Add Semester
+    </button>
+
+    <button class="calculate-btn" onclick="calculateCGPA()">
+        Calculate CGPA
+    </button>
+
+    <button class="reset-btn" onclick="resetCalculator()">
+        Reset
+    </button>
+
+    <div id="result" aria-live="polite">
+        <h2>Your CGPA</h2>
+        <div id="cgpaValue">0.00</div>
+        <p id="message"></p>
+    </div>
+
+    <p class="note">
+        Note: This calculator uses a credit-weighted average.
+        Enter the SGPA and total credits for each semester.
+        The result is an estimate; follow your university's
+        official CGPA calculation rules.
+    </p>
+
+    <a href="index.html" class="back">
+        ← Back to Home
+    </a>
+
+</div>
+
+<script>
+
+    let semesterCount = 1;
+
+    function addSemester() {
+
+        semesterCount++;
+
+        const container =
+            document.getElementById("semesterContainer");
+
+        const semester = document.createElement("div");
+
+        semester.className = "semester";
+
+        semester.innerHTML = `
+            <h3>Semester ${semesterCount}</h3>
+
+            <label>SGPA (0 - 10)</label>
+            <input type="number" class="sgpa"
+                   placeholder="Enter SGPA"
+                   min="0" max="10" step="0.01">
+
+            <label>Total Credits</label>
+            <input type="number" class="credits"
+                   placeholder="Enter credits"
+                   min="1" step="1">
+
+            <button class="remove-btn"
+                    onclick="removeSemester(this)">
+                Remove Semester
+            </button>
+        `;
+
+        container.appendChild(semester);
+
+        document.getElementById("result").style.display = "none";
+    }
+
+    function removeSemester(button) {
+
+        button.parentElement.remove();
+
+        updateSemesterNames();
+
+        document.getElementById("result").style.display = "none";
+    }
+
+    function updateSemesterNames() {
+
+        const semesters =
+            document.querySelectorAll(".semester");
+
+        semesterCount = semesters.length;
+
+        semesters.forEach((semester, index) => {
+            semester.querySelector("h3").textContent =
+                "Semester " + (index + 1);
+        });
+    }
+
+    function calculateCGPA() {
+
+        const sgpaInputs =
+            document.querySelectorAll(".sgpa");
+
+        const creditInputs =
+            document.querySelectorAll(".credits");
+
+        let totalPoints = 0;
+        let totalCredits = 0;
+
+        for (let i = 0; i < sgpaInputs.length; i++) {
+
+            const sgpa = sgpaInputs[i].value;
+            const credits = creditInputs[i].value;
+
+            if (
+                sgpa === "" ||
+                credits === "" ||
+                !Number.isFinite(Number(sgpa)) ||
+                !Number.isFinite(Number(credits)) ||
+                Number(sgpa) < 0 ||
+                Number(sgpa) > 10 ||
+                Number(credits) <= 0 ||
+                !Number.isInteger(Number(credits))
+            ) {
+                alert("Please enter valid SGPA and credits for every semester.");
+                return;
+            }
+
+            totalPoints += Number(sgpa) * Number(credits);
+            totalCredits += Number(credits);
+        }
+
+        if (totalCredits === 0) {
+            alert("Please add semester details first.");
+            return;
+        }
+
+        const cgpa = totalPoints / totalCredits;
+
+        document.getElementById("cgpaValue").textContent =
+            cgpa.toFixed(2);
+
+        document.getElementById("message").textContent =
+            "Your calculated CGPA is " + cgpa.toFixed(2);
+
+        document.getElementById("result").style.display =
+            "block";
+    }
+
+    function resetCalculator() {
+
+        document.getElementById("semesterContainer").innerHTML = `
+            <div class="semester">
+                <h3>Semester 1</h3>
+
+                <label>SGPA (0 - 10)</label>
+                <input type="number" class="sgpa"
+                       placeholder="Enter SGPA"
+                       min="0" max="10" step="0.01">
+
+                <label>Total Credits</label>
+                <input type="number" class="credits"
+                       placeholder="Enter credits"
+                       min="1" step="1">
+            </div>
+        `;
+
+        semesterCount = 1;
+
+        document.getElementById("result").style.display =
+            "none";
+    }
+
+</script>
+
+</body>
+</html>
